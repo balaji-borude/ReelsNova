@@ -31,6 +31,7 @@ const Login = () => {
   // onSubmit submitHandler(e: React.FormEvent<HTMLFormElement>)
   // submitHandler(e:React.FormEvent<HTMLInputElement>) --> he jevha input element la onSumit lavlele aste na tevaha use karayche
   async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
+
     e.preventDefault();
     const formdata: formType = {
       email,
@@ -63,7 +64,7 @@ const Login = () => {
       if (result?.error) {
         setError(result.error);
       } else {
-        //router.push("/dashboard"); // or wherever you want after login
+        router.push("/dashboard/user"); // or wherever you want after login
         console.log("Move to dashboard");
       }
       alert("login sucesfull")
@@ -106,7 +107,7 @@ const Login = () => {
         <p>
           Don’t have an account?
           <span
-            onClick={() => router.push("/register")}
+            onClick={() => router.push("/signup")}
             className="cursor-pointer text-blue-500"
           >
             Sign Up

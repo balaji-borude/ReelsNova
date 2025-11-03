@@ -50,7 +50,7 @@ const Header = () => {
                   Login
                 </Link>
            
-                <Link href="/register"
+                <Link href="/signup"
                   className="border px-3 py-1 rounded-lg text-xl font-bold hover:cursor-pointer  "
                 > 
                   SignUp
