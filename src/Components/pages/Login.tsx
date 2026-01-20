@@ -1,9 +1,35 @@
+import React from "react";
 import { Link } from "react-router-dom"
 import { Navbar } from "../layout/Navbar"
 import { Logo } from "../shared/Logo"
 import { Mail, Lock, Eye } from "lucide-react"
 
+import { Login as LoginApi } from "../../Services/Operations/AuthApi";
+
 export default function Login() {
+
+  const [formData,setFormData]=React.useState({
+    email:"",
+    password:""
+  });
+
+  // onChange handler
+  const onChangeHandler=(e:React.ChangeEvent<HTMLInputElement>)=>{
+    setFormData((prevData)=>({
+      ...prevData,
+      [e.target.name]:e.target.value
+    }))
+  }
+
+  // form Submission handler
+  const SubmitHandler=async(e:React.FormEvent)=>{
+    e.preventDefault();
+    console.log("Printingthe Form data -->", formData);
+    //call login api
+    await LoginApi({formData});
+  }
+
+
   return (
     <div className="min-h-screen bg-neutral-950">
       <Navbar />
@@ -27,7 +53,7 @@ export default function Login() {
             </div>
 
             {/* Form */}
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={SubmitHandler}>
               {/* Email */}
               <div className="space-y-2">
                 <label htmlFor="email" className="text-neutral-300 text-sm">
@@ -38,6 +64,9 @@ export default function Login() {
                   <input
                     id="email"
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={onChangeHandler}
                     placeholder="Enter your email"
                     className="w-full pl-10 pr-4 py-3 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder:text-neutral-500 focus:outline-none focus:border-rose-500"
                   />
@@ -54,6 +83,9 @@ export default function Login() {
                   <input
                     id="password"
                     type="password"
+                    value={formData.password}
+                    name="password"
+                    onChange={onChangeHandler}
                     placeholder="Enter your password"
                     className="w-full pl-10 pr-10 py-3 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder:text-neutral-500 focus:outline-none focus:border-rose-500"
                   />
