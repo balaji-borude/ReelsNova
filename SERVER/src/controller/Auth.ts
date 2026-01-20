@@ -3,15 +3,11 @@ import { prisma } from "../config/prisma";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { Payload } from "../generated/prisma/internal/prismaNamespace";
+
 
 dotenv.config();
 
-interface Props {
-  username: string;
-  email: string;
-  password: string;
-}
+
 
 // SignUp Controller
 export const signup = async (req: Request, res: Response) => {
