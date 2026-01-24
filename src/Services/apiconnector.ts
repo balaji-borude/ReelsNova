@@ -8,9 +8,8 @@ export const apiConnector = (
   url: string,
   bodyData?: unknown,
   headers?: Record<string, string>,
-  params?: Record<string, unknown>
+  params?: Record<string, unknown>,
 ) => {
-
   return axiosInstance({
     method,
     url,

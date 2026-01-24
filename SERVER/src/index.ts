@@ -23,6 +23,10 @@ import authRoutes from './routes/auth';
 app.use("/api/v1/auth", authRoutes);
 
 
+app.get('/health', (req:Request, res:Response) => {
+  res.status(200).json({ success:true, message: 'Server is healthy' });
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

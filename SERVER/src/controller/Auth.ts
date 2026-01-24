@@ -120,7 +120,7 @@ export const login = async (req: Request, res: Response) => {
     return res.status(500).json({
       success: false,
       message: "Internal Server Error",
-      error: "Server error",
+      error: err,
     });
   }
 };

@@ -26,7 +26,9 @@ export default function Login() {
     e.preventDefault();
     console.log("Printingthe Form data -->", formData);
     //call login api
-    await LoginApi({formData});
+   const result =  await LoginApi({formData});
+   console.log("Result of login ----> ", result)
+    console.log("after api calling ")
   }
 
 
