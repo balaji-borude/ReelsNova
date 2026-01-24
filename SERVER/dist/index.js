@@ -19,6 +19,9 @@ app.get('/', (req, res) => {
 const auth_1 = __importDefault(require("./routes/auth"));
 // auth routes
 app.use("/api/v1/auth", auth_1.default);
+app.get('/health', (req, res) => {
+    res.status(200).json({ success: true, message: 'Server is healthy' });
+});
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

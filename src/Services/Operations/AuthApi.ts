@@ -8,28 +8,49 @@ interface loginProps {
     password: string;
   };
 }
-
-export const Login = async ({formData}:loginProps) => {
-    const toastId = toast.loading("Logging in...");
+// login
+export const Login = async ({ formData }: loginProps) => {
+  const toastId = toast.loading("Logging in...");
 
   try {
-
     const response = await apiConnector("POST", endpoints.LOGIN_API, formData);
 
-    console.log("Login Api response -->", response);
     if (!response.data.success) {
-      toast.error(response.data.message);
-      throw new Error("Login failed");
+      throw new Error(response.data.message);
     }
 
     toast.success("Login Successful");
-
-    //navigate("/home")
+    return response.data;
   } catch (error) {
-    console.log("LOGIN API ERROR -->", error);
-    toast.error("Login failed. Please try again.");
-  }finally{
-        // later
+    toast.error((error as Error).message || "Login failed. Please try again.");
+    throw error;
+  } finally {
+    toast.dismiss(toastId);
+  }
+};
+
+// signup
+interface SignUpProps {
+  formData: {
+    username:string;
+    email: string;
+    password: string;
+  }
+}
+export const SignUp = async ({ formData }:SignUpProps) => {
+  const toastId = toast.loading("Signing up...");
+  try {
+    const response = await apiConnector("POST", endpoints.SIGNUP_API, formData);
+    if (!response.data.success) {
+      throw new Error(response.data.message);
+    }
+    toast.success("Signup Successful");
+    return response.data;
+  } catch (error) {
+    console.log("SIGNUP_ERROR --> ", error);
+    toast.error((error as Error).message || "Signup failed. Please try again.");
+    throw error;
+  } finally {
     toast.dismiss(toastId);
   }
 };

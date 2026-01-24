@@ -1,9 +1,41 @@
-import { Link } from "react-router-dom"
-import { Navbar } from "../layout/Navbar"
-import { Logo } from "../shared/Logo"
-import { Mail, Lock, Eye, User } from "lucide-react"
+import { Link, useNavigate } from "react-router-dom";
+import { Navbar } from "../layout/Navbar";
+import { Logo } from "../shared/Logo";
+import { Mail, Lock, Eye, User } from "lucide-react";
+import React from "react";
+import { SignUp as SignUpApi } from "../../Services/Operations/AuthApi";
 
 export default function SignupPage() {
+
+  const navigate = useNavigate();
+
+  const [formData, setFormdata] = React.useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  function onChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
+    setFormdata((prevdata) => ({
+      ...prevdata,
+      [e.target.name]: e.target.value,
+    }));
+  }
+
+  // signup function
+  async function submitHandler(e: React.FormEvent) {
+    try {
+      e.preventDefault();
+      console.log("Signup form data --> ",formData);
+      const result = await SignUpApi({formData});
+      if(result?.success){
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="min-h-screen bg-neutral-950">
       <Navbar />
@@ -27,7 +59,7 @@ export default function SignupPage() {
             </div>
 
             {/* Form */}
-            <form className="space-y-5">
+            <form className="space-y-5" onSubmit={submitHandler}>
               {/* Username */}
               <div className="space-y-2">
                 <label htmlFor="username" className="text-neutral-300 text-sm">
@@ -38,7 +70,10 @@ export default function SignupPage() {
                   <input
                     id="username"
                     type="text"
-                    placeholder="Choose a username"
+                    name='username'
+                    value={formData.username}
+                    onChange={onChangeHandler}
+                    placeholder="Enter a username"
                     className="w-full pl-10 pr-4 py-3 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder:text-neutral-500 focus:outline-none focus:border-rose-500"
                   />
                 </div>
@@ -54,6 +89,9 @@ export default function SignupPage() {
                   <input
                     id="email"
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={onChangeHandler}
                     placeholder="Enter your email"
                     className="w-full pl-10 pr-4 py-3 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder:text-neutral-500 focus:outline-none focus:border-rose-500"
                   />
@@ -70,6 +108,9 @@ export default function SignupPage() {
                   <input
                     id="password"
                     type="password"
+                    value={formData.password}
+                    name="password"
+                    onChange={onChangeHandler}
                     placeholder="Create a password"
                     className="w-full pl-10 pr-10 py-3 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder:text-neutral-500 focus:outline-none focus:border-rose-500"
                   />
@@ -87,7 +128,10 @@ export default function SignupPage() {
 
               {/* Confirm Password */}
               <div className="space-y-2">
-                <label htmlFor="confirmPassword" className="text-neutral-300 text-sm">
+                <label
+                  htmlFor="confirmPassword"
+                  className="text-neutral-300 text-sm"
+                >
                   Confirm Password
                 </label>
                 <div className="relative">
@@ -167,7 +211,11 @@ export default function SignupPage() {
                 </button>
 
                 <button className="flex items-center justify-center gap-2 border border-neutral-700 hover:bg-neutral-800 text-white bg-transparent py-3 rounded-md transition">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
                   </svg>
                   GitHub
@@ -178,7 +226,10 @@ export default function SignupPage() {
             {/* Footer */}
             <p className="text-center text-neutral-400 text-sm mt-8">
               Already have an account?{" "}
-              <Link to="/login" className="text-rose-500 hover:text-rose-400 font-medium">
+              <Link
+                to="/login"
+                className="text-rose-500 hover:text-rose-400 font-medium"
+              >
                 Sign in
               </Link>
             </p>
@@ -186,5 +237,5 @@ export default function SignupPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

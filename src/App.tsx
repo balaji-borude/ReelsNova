@@ -4,6 +4,7 @@
 import { Routes,Route } from "react-router-dom"
 import Home from "./Components/home";
 import Login from "./Components/pages/Login"
+import Feed from "./Components/Feed/Feed";
 
 function App() {
 
@@ -15,6 +16,8 @@ function App() {
       {/* Auth Routes */}
       <Route path="/login" element={<Login/>} />
       <Route path="/signup" element={<SignupPage/>} />
+      
+      <Route path="/feed" element={<Feed/>} />
     </Routes>
     
 
