@@ -11,8 +11,10 @@ interface ReelCardProps {
 
 export function ReelCard({ username, avatar, thumbnail, likes, comments, caption }: ReelCardProps) {
   return (
-    <div className="relative bg-neutral-900 rounded-xl overflow-hidden group cursor-pointer">
-      <div className="aspect-[9/16] relative">
+    <div className="relative rounded-xl overflow-hidden group cursor-pointer w-full h-full bg-neutral-900">
+      <div className="aspect-[9/16] relative w-full h-full">
+
+        {/* Thumbnail */}
         <img
           src={thumbnail || "/placeholder.svg"}
           alt={`Reel by ${username}`}
@@ -53,20 +55,24 @@ export function ReelCard({ username, avatar, thumbnail, likes, comments, caption
 
         {/* Actions */}
         <div className="absolute right-3 bottom-20 flex flex-col gap-4">
+          {/* Like */}
           <button className="flex flex-col items-center gap-1 text-white hover:text-rose-500 transition-colors">
             <Heart className="w-6 h-6" />
             <span className="text-xs">{likes}</span>
           </button>
 
+          {/* Comment */}
           <button className="flex flex-col items-center gap-1 text-white hover:text-sky-500 transition-colors">
             <MessageCircle className="w-6 h-6" />
             <span className="text-xs">{comments}</span>
           </button>
 
+          {/* Share */}
           <button className="flex flex-col items-center gap-1 text-white hover:text-white/80 transition-colors">
             <Share2 className="w-5 h-5" />
           </button>
 
+          {/* Bookmark */}
           <button className="flex flex-col items-center gap-1 text-white hover:text-white/80 transition-colors">
             <Bookmark className="w-5 h-5" />
           </button>

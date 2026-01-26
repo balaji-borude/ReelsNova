@@ -9,7 +9,8 @@ import Feed from "./Components/Feed/Feed";
 function App() {
 
   return (
-   <div className="h-screen bg-neutral-950">
+    //  bg-neutral-950
+   <div>
 
     <Routes>
       <Route path="/" element={<Home/>} />
