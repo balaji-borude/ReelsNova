@@ -28,7 +28,7 @@ export function HeroSection() {
             >
               Create. Share.
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-rose-600">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-rose-400 to-rose-600">
                 Go Viral.
               </span>
             </h1>
@@ -73,7 +73,7 @@ export function HeroSection() {
           {/* Right side */}
           <div className="hidden lg:flex justify-center">
             <div className="relative">
-              <div className="w-72 h-[580px] bg-neutral-900 rounded-[3rem] p-3 border-4 border-neutral-800 shadow-2xl">
+              <div className="w-72 h-145 bg-neutral-900 rounded-[3rem] p-3 border-4 border-neutral-800 shadow-2xl">
                 <div className="w-full h-full bg-neutral-950 rounded-[2.5rem] overflow-hidden relative">
                   <div className="absolute top-0 left-0 right-0 h-8 bg-black/50 backdrop-blur-sm z-10 flex items-center justify-center">
                     <div className="w-20 h-5 bg-black rounded-full" />
@@ -85,7 +85,7 @@ export function HeroSection() {
                     className="w-full h-full object-cover"
                   />
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-black/30" />
 
                   <div className="absolute bottom-6 left-4 right-16">
                     <div className="flex items-center gap-2 mb-2">

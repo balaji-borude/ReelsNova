@@ -73,6 +73,8 @@ export const login = async (req: Request, res: Response) => {
     const user = await prisma.user.findUnique({
       where: { email },
     });
+
+    console.log("Printing user backend -->", user);
     // if user is not exist
     if (!user) {
       return res.status(404).json({
@@ -113,6 +115,7 @@ export const login = async (req: Request, res: Response) => {
       success: true,
       message: "Login successful",
       token,
+      user
     });
     
   } catch (err) {

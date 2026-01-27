@@ -8,7 +8,8 @@ const navLinks = [
   { href: "/feed", label: "Feed" },
   { href: "/login", label: "Login" },
   { href: "/signup", label: "Signup" },
-]
+];
+
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -31,6 +32,8 @@ export function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* left side */}
         <div className="flex items-center justify-between h-16">
           <Link to="/">
             <Logo size="md" />
@@ -77,7 +80,7 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile responsive menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-neutral-950/98 backdrop-blur-md border-t border-neutral-800">
           <div className="px-4 py-6 space-y-4">
@@ -110,6 +113,16 @@ export function Navbar() {
           </div>
         </div>
       )}
+
+      {/* Profile Icons */}
+      <div>
+          <img
+            src="/man-chef-avatar.jpg"
+            alt={`profile`}
+            className="aspect-square w-10 rounded-full object-cover"
+          />
+      </div> 
+
     </nav>
   )
 }

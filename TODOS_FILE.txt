@@ -1,0 +1,11 @@
+PENDING WORK 
+1.use Redux toolkit (state managemnt ) 
+2.Private route implementation(for feed,dashboard,profile,settings pages )
+3.Forgot password and reset password pages implementation
+
+4.Implement like ,comment and share functionality on reels
+5.Implement follow and unfollow functionality
+6.Implement user suggestions on dashboard page
+7.Implement search functionality on dashboard page
+8.Implement notifications functionality
+9.Implement user profile page(edit profile,view reels,followers,following)

@@ -1,12 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 
 import { Logo } from "../shared/Logo";
-import { Mail, Lock, Eye, User } from "lucide-react";
+import { Mail, Lock, Eye, User, EyeOff } from "lucide-react";
 import React from "react";
 import { SignUp as SignUpApi } from "../../Services/Operations/AuthApi";
 
 export default function SignupPage() {
+
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const [formData, setFormdata] = React.useState({
     username: "",
@@ -108,7 +110,7 @@ export default function SignupPage() {
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
                   <input
                     id="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     value={formData.password}
                     name="password"
                     onChange={onChangeHandler}
@@ -118,8 +120,11 @@ export default function SignupPage() {
                   <button
                     type="button"
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-neutral-300"
+                    onClick={() => setShowPassword((prev) => !prev)}
                   >
-                    <Eye className="w-5 h-5" />
+                    {
+                      showPassword ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />
+                    }
                   </button>
                 </div>
 
@@ -140,7 +145,7 @@ export default function SignupPage() {
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
                   <input
                     id="confirmPassword"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="Confirm your password"
                     className="w-full pl-10 pr-4 py-3 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder:text-neutral-500 focus:outline-none focus:border-rose-500"
                   />

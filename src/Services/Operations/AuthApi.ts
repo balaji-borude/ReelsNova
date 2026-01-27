@@ -20,6 +20,11 @@ export const Login = async ({ formData }: loginProps) => {
     }
 
     toast.success("Login Successful");
+    console.log("Login res",response);
+    console.log("Checking user ",response.data.user)
+    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("user", JSON.stringify(response.data.user));
+
     return response.data;
   } catch (error) {
     toast.error((error as Error).message || "Login failed. Please try again.");
