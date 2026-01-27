@@ -63,7 +63,7 @@ export const SignUp = async ({ formData }: SignUpProps) => {
     }
 
     toast.error(errorMessage);
-    // throw error;
+     throw error;
 
   } finally {
     toast.dismiss(toastId);
