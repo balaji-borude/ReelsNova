@@ -37,20 +37,36 @@ interface SignUpProps {
     password: string;
   }
 }
-export const SignUp = async ({ formData }:SignUpProps) => {
+import axios from "axios";
+
+export const SignUp = async ({ formData }: SignUpProps) => {
   const toastId = toast.loading("Signing up...");
   try {
-    const response = await apiConnector("POST", endpoints.SIGNUP_API, formData);
-    if (!response.data.success) {
-      throw new Error(response.data.message);
-    }
+    const response = await apiConnector(
+      "POST",
+      endpoints.SIGNUP_API,
+      formData
+    );
+
     toast.success("Signup Successful");
     return response.data;
-  } catch (error) {
+
+  } catch (error: unknown) {
     console.log("SIGNUP_ERROR --> ", error);
-    toast.error((error as Error).message || "Signup failed. Please try again.");
-    throw error;
+
+    let errorMessage = "Signup failed. Please try again.";
+
+    if (axios.isAxiosError(error)) {
+  
+     errorMessage =
+        error.response?.data?.error || error.message;
+    }
+
+    toast.error(errorMessage);
+    // throw error;
+
   } finally {
     toast.dismiss(toastId);
   }
 };
+

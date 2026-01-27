@@ -1,12 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Navbar } from "../layout/Navbar";
+
 import { Logo } from "../shared/Logo";
 import { Mail, Lock, Eye, User } from "lucide-react";
 import React from "react";
 import { SignUp as SignUpApi } from "../../Services/Operations/AuthApi";
 
 export default function SignupPage() {
-
   const navigate = useNavigate();
 
   const [formData, setFormdata] = React.useState({
@@ -26,9 +25,9 @@ export default function SignupPage() {
   async function submitHandler(e: React.FormEvent) {
     try {
       e.preventDefault();
-      console.log("Signup form data --> ",formData);
-      const result = await SignUpApi({formData});
-      if(result?.success){
+      console.log("Signup form data --> ", formData);
+      const result = await SignUpApi({ formData });
+      if (result?.success) {
         navigate("/login");
       }
     } catch (error) {
@@ -37,9 +36,8 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-950">
-      <Navbar />
-      <main className="flex items-center justify-center min-h-screen px-4 py-24">
+    <div className="min-h-screen bg-neutral-950 flex items-center justify-center px-4">
+      <main className="w-full flex justify-center">
         <div className="w-full max-w-md">
           <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-8">
             {/* Header */}
@@ -62,15 +60,17 @@ export default function SignupPage() {
             <form className="space-y-5" onSubmit={submitHandler}>
               {/* Username */}
               <div className="space-y-2">
+                {/* userName */}
                 <label htmlFor="username" className="text-neutral-300 text-sm">
                   Username
                 </label>
                 <div className="relative">
+                  {/* Logo */}
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
                   <input
                     id="username"
                     type="text"
-                    name='username'
+                    name="username"
                     value={formData.username}
                     onChange={onChangeHandler}
                     placeholder="Enter a username"
@@ -90,6 +90,7 @@ export default function SignupPage() {
                     id="email"
                     type="email"
                     name="email"
+                    required
                     value={formData.email}
                     onChange={onChangeHandler}
                     placeholder="Enter your email"
@@ -121,7 +122,8 @@ export default function SignupPage() {
                     <Eye className="w-5 h-5" />
                   </button>
                 </div>
-                <p className="text-xs text-neutral-500">
+
+                <p className="text-xs text-neutral-500 mt-1">
                   Must be at least 8 characters
                 </p>
               </div>

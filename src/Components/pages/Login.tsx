@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Navbar } from "../layout/Navbar";
+
 import { Logo } from "../shared/Logo";
 import { Mail, Lock, Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -36,9 +36,8 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950">
-      <Navbar />
-      <main className="flex items-center justify-center min-h-screen px-4 py-24">
+    <div className="min-h-screen bg-neutral-950 flex items-center justify-center px-4">
+      <main className="w-full flex justify-center">
         <div className="w-full max-w-md">
           <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-8">
             {/* Header */}
