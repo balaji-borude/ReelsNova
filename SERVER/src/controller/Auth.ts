@@ -4,10 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
-
 dotenv.config();
-
-
 
 // SignUp Controller
 export const signup = async (req: Request, res: Response) => {
@@ -110,20 +107,19 @@ export const login = async (req: Request, res: Response) => {
       expiresIn: "3d",
     });
 
-    // we want to remove password from the user and then send to the response 
-     //user.password = undefined;
+    // we want to remove password from the user and then send to the response
+    //user.password = undefined;
 
     // send the response
     return res.status(200).json({
       success: true,
       message: "Login successful",
       token,
-      user:{
-        id:user.id,
-        email:user.email
-      }
+      user: {
+        id: user.id,
+        email: user.email,
+      },
     });
-    
   } catch (err) {
     console.error(err);
     return res.status(500).json({

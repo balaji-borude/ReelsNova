@@ -6,8 +6,8 @@ import { Logo } from "../shared/Logo"
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/feed", label: "Feed" },
-  { href: "/login", label: "Login" },
-  { href: "/signup", label: "Signup" },
+  { href: "/upload", label: "Upload" },
+  // { href: "/signup", label: "Signup" },
 ];
 
 
@@ -15,6 +15,7 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
+  // scrolling sideeffect handle here 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10)
@@ -22,6 +23,12 @@ export function Navbar() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  // if user is logged in then insted of signin and signUP/ Get started Button show and profile icons and on clicking the icon drop down is open having dahsboard and logout buttons 
+  const token = localStorage.getItem('token');
+  const user = localStorage.getItem('user');
+  console.log("Printing thetoken -->", token );
+  console.log("Printing User -->", user );
 
   return (
     <nav

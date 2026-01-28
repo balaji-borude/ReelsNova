@@ -6,6 +6,7 @@ import Home from "./Components/home";
 import Login from "./Components/pages/Login"
 import Feed from "./Components/Feed/Feed";
 import MainLayout from "./Components/layout/MainLayout";
+import UploadForm from "./Components/Upload/UploadForm";
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
         
         {/* Do Private route here --create dashboard for profile , settings, etc pages  */}
         <Route path="/feed" element={<Feed/>} />
+        <Route path="/upload" element={<UploadForm/>}/>
       </Route>
     </Routes>
     

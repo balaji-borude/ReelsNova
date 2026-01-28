@@ -1,6 +1,13 @@
 import { apiConnector } from "../apiconnector";
 import { endpoints } from "../apis";
 import toast from "react-hot-toast";
+import axios from "axios";
+
+const {
+  LOGIN_API,
+  SIGNUP_API
+} = endpoints;
+
 
 interface loginProps {
   formData: {
@@ -8,12 +15,13 @@ interface loginProps {
     password: string;
   };
 }
+
 // login
 export const Login = async ({ formData }: loginProps) => {
   const toastId = toast.loading("Logging in...");
 
   try {
-    const response = await apiConnector("POST", endpoints.LOGIN_API, formData);
+    const response = await apiConnector("POST", LOGIN_API, formData);
 
     if (!response.data.success) {
       throw new Error(response.data.message);
@@ -51,14 +59,13 @@ interface SignUpProps {
     password: string;
   }
 }
-import axios from "axios";
 
 export const SignUp = async ({ formData }: SignUpProps) => {
   const toastId = toast.loading("Signing up...");
   try {
     const response = await apiConnector(
       "POST",
-      endpoints.SIGNUP_API,
+      SIGNUP_API,
       formData
     );
 
