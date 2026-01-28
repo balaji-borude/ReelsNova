@@ -1,16 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import { Logo } from "../shared/Logo";
-import { Mail, Lock, Eye,EyeOff } from "lucide-react";
-
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
 import { Login as LoginApi } from "../../Services/Operations/AuthApi";
 
 export default function Login() {
-
-  const [showPassword , setShowPassword] = React.useState(true);
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const [formData, setFormData] = React.useState({
     email: "",
@@ -91,7 +87,7 @@ export default function Login() {
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
                   <input
                     id="password"
-                    type={showPassword ? "text":"password"}
+                    type={showPassword ? "text" : "password"}
                     value={formData.password}
                     name="password"
                     onChange={onChangeHandler}
@@ -101,13 +97,13 @@ export default function Login() {
                   <button
                     type="button"
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-neutral-300"
-                    onClick={()=>setShowPassword(prev=>!prev)}
-                    
+                    onClick={() => setShowPassword((prev) => !prev)}
                   >
-
-                    {
-                     showPassword ? <Eye className="w-5 h-5"/>: <EyeOff className="w-5 h-5"/>
-                    }
+                    {showPassword ? (
+                      <Eye className="w-5 h-5" />
+                    ) : (
+                      <EyeOff className="w-5 h-5" />
+                    )}
                   </button>
                 </div>
               </div>

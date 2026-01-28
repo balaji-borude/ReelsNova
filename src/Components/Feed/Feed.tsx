@@ -1,13 +1,12 @@
-
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Mousewheel, Keyboard } from 'swiper/modules';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Mousewheel, Keyboard } from "swiper/modules";
 
 // Import Swiper styles
-import 'swiper/css';
+import "swiper/css";
 
 // Import ReelCard component
-import { ReelCard } from '../shared/ReelCard';
+import { ReelCard } from "../shared/ReelCard";
 
 // Sample reel data -- HERE we want to fetch data from backend
 const reels = [
@@ -57,30 +56,33 @@ const reels = [
 
 const Feed = () => {
   return (
-    <div className='h-screen w-full  bg-neutral-950 overflow-hidden'>
+    <div className="h-[calc(100vh-64px)] mt-16 w-full bg-neutral-950 overflow-hidden">
       <Swiper
-        direction='vertical'
+        direction="vertical"
         slidesPerView={1}
-        spaceBetween={0}
+        // spaceBetween={0}
         mousewheel={true}
         keyboard={{
           enabled: true,
         }}
         modules={[Mousewheel, Keyboard]}
-        className='h-full w-full'
-        onSlideChange={() => console.log('slide change')}
+        className="h-full w-full"
+        onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
       >
         {reels.map((reel, index) => (
-          <SwiperSlide key={index} className='flex items-center justify-center bg-neutral-950 w-full h-full'>
-            <div className='w-[400px] h-[85vh]'>
+          <SwiperSlide
+            key={index}
+            className="flex items-center justify-center h-full bg-neutral-950"
+          >
+            <div className="h-[90vh] aspect-9/16 max-w-[420px] w-full">
               <ReelCard {...reel} />
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
     </div>
-  )
-}
+  );
+};
 
-export default Feed
+export default Feed;

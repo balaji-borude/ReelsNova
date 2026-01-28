@@ -12,8 +12,7 @@ interface ReelCardProps {
 export function ReelCard({ username, avatar, thumbnail, likes, comments, caption }: ReelCardProps) {
   return (
     <div className="relative rounded-xl overflow-hidden group cursor-pointer w-full h-full bg-neutral-900">
-      <div className="aspect-[9/16] relative w-full h-full">
-
+     <div className="relative w-full h-full">
         {/* Thumbnail */}
         <img
           src={thumbnail || "/placeholder.svg"}
