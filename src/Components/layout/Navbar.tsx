@@ -115,10 +115,10 @@ export function Navbar() {
       )}
 
       {/* Profile Icons */}
-      <div>
+      <div className="hidden">
           <img
             src="/man-chef-avatar.jpg"
-            alt={`profile`}
+            alt="profile"
             className="aspect-square w-10 rounded-full object-cover"
           />
       </div> 

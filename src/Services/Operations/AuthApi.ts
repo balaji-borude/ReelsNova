@@ -26,9 +26,18 @@ export const Login = async ({ formData }: loginProps) => {
     localStorage.setItem("user", JSON.stringify(response.data.user));
 
     return response.data;
-  } catch (error) {
-    toast.error((error as Error).message || "Login failed. Please try again.");
-    throw error;
+  } catch (error:unknown) {
+    let errorMessage = "Login failed. Please try again.";
+
+    if (axios.isAxiosError(error)) {
+  
+     errorMessage =
+        error.response?.data?.error || error.message;
+    }
+
+    toast.error(errorMessage);
+     throw error;
+     
   } finally {
     toast.dismiss(toastId);
   }

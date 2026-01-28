@@ -110,12 +110,18 @@ export const login = async (req: Request, res: Response) => {
       expiresIn: "3d",
     });
 
+    // we want to remove password from the user and then send to the response 
+     //user.password = undefined;
+
     // send the response
     return res.status(200).json({
       success: true,
       message: "Login successful",
       token,
-      user
+      user:{
+        id:user.id,
+        email:user.email
+      }
     });
     
   } catch (err) {
