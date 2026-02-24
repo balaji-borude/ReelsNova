@@ -8,6 +8,7 @@ dotenv.config();
 
 // SignUp Controller
 export const signup = async (req: Request, res: Response) => {
+  
   try {
     const { username, email, password } = req.body;
 
