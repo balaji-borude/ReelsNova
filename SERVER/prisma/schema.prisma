@@ -13,12 +13,11 @@ datasource db {
 }
 
 // Changed models or fields → npx prisma migrate dev
-
 // Only tooling/config change → npx prisma generate
-
 // Fresh machine, DB already in sync → npx prisma generate
 
-model User {
+// always use the plural naming convention for model names, e.g. "Users" instead of "User"  
+model Users {
   id        Int      @id @default(autoincrement())
   username  String
   email     String   @unique
@@ -27,7 +26,7 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-model Balaji {
+model Balajis {
   id         Int      @id @default(autoincrement())
   username   String   @unique
   password   String

@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req:Request, res:Response) => {
-  res.send('Hello, World!');
+  res.send('Reels Nova Server is running1');
 }); 
 
 // import Routes

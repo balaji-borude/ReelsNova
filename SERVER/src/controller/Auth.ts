@@ -19,7 +19,7 @@ export const signup = async (req: Request, res: Response) => {
       });
     }
 
-    const existing = await prisma.user.findUnique({
+    const existing = await prisma.users.findUnique({
       where: { email },
     });
 
@@ -32,7 +32,7 @@ export const signup = async (req: Request, res: Response) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await prisma.user.create({
+    const user = await prisma.users.create({
       data: {
         username,
         password: hashedPassword,
@@ -68,7 +68,7 @@ export const login = async (req: Request, res: Response) => {
     }
 
     // generate the jwt token
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
       where: { email },
     });
 

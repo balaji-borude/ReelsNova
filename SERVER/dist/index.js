@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 4000;
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.get('/', (req, res) => {
-    res.send('Hello, World!');
+    res.send('Reels Nova Server is running1');
 });
 // import Routes
 const auth_1 = __importDefault(require("./routes/auth"));

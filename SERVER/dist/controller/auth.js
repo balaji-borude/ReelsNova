@@ -19,7 +19,7 @@ const signup = async (req, res) => {
                 error: "All fields are required",
             });
         }
-        const existing = await prisma_1.prisma.user.findUnique({
+        const existing = await prisma_1.prisma.users.findUnique({
             where: { email },
         });
         if (existing) {
@@ -29,7 +29,7 @@ const signup = async (req, res) => {
             });
         }
         const hashedPassword = await bcrypt_1.default.hash(password, 10);
-        const user = await prisma_1.prisma.user.create({
+        const user = await prisma_1.prisma.users.create({
             data: {
                 username,
                 password: hashedPassword,
@@ -63,7 +63,7 @@ const login = async (req, res) => {
             });
         }
         // generate the jwt token
-        const user = await prisma_1.prisma.user.findUnique({
+        const user = await prisma_1.prisma.users.findUnique({
             where: { email },
         });
         console.log("Printing user backend -->", user);

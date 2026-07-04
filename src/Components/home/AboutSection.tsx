@@ -11,6 +11,7 @@ const features = [
     title: "Safe & Secure",
     description: "Your content and data are protected with enterprise-grade security.",
   },
+  
   {
     icon: Globe,
     title: "Global Reach",

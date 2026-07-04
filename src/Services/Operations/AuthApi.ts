@@ -15,6 +15,14 @@ interface loginProps {
     password: string;
   };
 }
+// signup
+interface SignUpProps {
+  formData: {
+    username:string;
+    email: string;
+    password: string;
+  }
+}
 
 // login
 export const Login = async ({ formData }: loginProps) => {
@@ -50,15 +58,6 @@ export const Login = async ({ formData }: loginProps) => {
     toast.dismiss(toastId);
   }
 };
-
-// signup
-interface SignUpProps {
-  formData: {
-    username:string;
-    email: string;
-    password: string;
-  }
-}
 
 export const SignUp = async ({ formData }: SignUpProps) => {
   const toastId = toast.loading("Signing up...");
