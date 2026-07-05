@@ -17,19 +17,45 @@ datasource db {
 // Fresh machine, DB already in sync → npx prisma generate
 
 // always use the plural naming convention for model names, e.g. "Users" instead of "User"  
+
 model Users {
-  id        Int      @id @default(autoincrement())
-  username  String
-  email     String   @unique
-  password  String
+  id           Int     @id @default(autoincrement())
+  username     String  @unique
+  email        String  @unique
+  password     String
+  // ? --> it show the optional field, if the field is not required, it can be null
+  fullName     String?
+  bio          String? @db.VarChar(200)
+  profileImage String?
+  website      String?
+  location     String?
+  isPrivate    Boolean @default(false)
+  isVerified   Boolean @default(false)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  posts Posts[]
+  // followers       Follow[] @relation("UserFollowers")
+  // following       Follow[] @relation("UserFollowing")
+  // comments        Comment[]
+  // likes           Like[]
+  // savedPosts      SavedPost[]
+  // notifications   Notification[]
+}
+
+model Posts {
+  id Int @id @default(autoincrement())
+  caption String?
+  createdAt DateTime @default(now())
+  userId Int
+  user Users @relation(fields: [userId], references: [id])
 }
 
 model Balajis {
-  id         Int      @id @default(autoincrement())
-  username   String   @unique
-  password   String
-  firstName  String
-  lastName   String
+  id        Int    @id @default(autoincrement())
+  username  String @unique
+  password  String
+  firstName String
+  lastName  String
 }

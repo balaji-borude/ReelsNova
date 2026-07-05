@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Logo } from "../shared/Logo";
 import toast from "react-hot-toast";
+import {useNavigate} from "react-router-dom";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -21,6 +22,8 @@ export function Navbar() {
   const userData = localStorage.getItem("user");
   return userData ? JSON.parse(userData) : null;
 });
+
+const navigate = useNavigate();
 
 const [isLoggedIn, setIsLoggedIn] = useState(() => {
   return Boolean(localStorage.getItem("token"));
@@ -107,14 +110,15 @@ const [isLoggedIn, setIsLoggedIn] = useState(() => {
               <div className="relative">
                 <div
                   className="flex items-center gap-1 cursor-pointer"
-                  onClick={() => setShowProfileMenu((p) => !p)}
+                  // onClick={() => setShowProfileMenu((p) => !p)}
+                  onClick={() => navigate("/profile")}
                 >
                   <img
                     src="/man-chef-avatar.jpg"
                     alt={`${user?.id}`}
                     className="w-10 h-10 rounded-full object-cover"
                   />
-                  <ChevronDown className="text-white" />
+                  {/* <ChevronDown className="text-white" /> */}
                 </div>
 
                 {showProfileMenu && (
