@@ -19,6 +19,17 @@ export const signup = async (req: Request, res: Response) => {
       });
     }
 
+    const existingUser = await prisma.users.findUnique({
+      where: { username },
+    });
+
+    if (existingUser) {
+      return res.status(409).json({
+        success: false,
+        error: "username already exists",
+      });
+    } 
+
     const existing = await prisma.users.findUnique({
       where: { email },
     });

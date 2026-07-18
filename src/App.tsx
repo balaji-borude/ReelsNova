@@ -8,10 +8,12 @@ import UploadForm from "./Components/Upload/UploadForm";
 import PrivateRoute from "./Components/shared/PrivateRoute";
 import PublicRoute from "./Components/shared/PublicRoute";
 import Profile from "./Components/profile/Profile";
+import EditProfile from "./Components/profile/edit/EditProfile";
+
 
 function App() {
   return (
-    //  bg-neutral-950
+  
     <div>
       <Routes>
         {/* Public Routes */}
@@ -50,6 +52,18 @@ function App() {
               </PrivateRoute>
             }
           />
+
+          <Route
+            path="/profile/edit-profile"
+            element={
+              <PrivateRoute>
+                <EditProfile />
+              </PrivateRoute>
+            }
+          />
+
+
+
         </Route>
 
 

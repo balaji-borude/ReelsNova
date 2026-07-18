@@ -2,6 +2,7 @@ import { Grid3x3, SquarePlay, User, MapPin, Link2 } from "lucide-react";
 import { useState } from "react";
 import ProfileMediaGrid from "./ProfileMediaGrid";
 import { posts, reels, taggedPosts } from "./mockData";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState<"posts" | "reels" | "tagged">(
@@ -21,7 +22,7 @@ const Profile = () => {
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   };
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-neutral-950 text-white">
@@ -87,7 +88,9 @@ const Profile = () => {
             {/* Buttons */}
 
             <div className="flex flex-col sm:flex-row gap-3 mt-8">
-              <button className="bg-rose-500 hover:bg-rose-600 transition px-5 py-2 rounded-lg font-medium cursor-pointer">
+              <button className="bg-rose-500 hover:bg-rose-600 transition px-5 py-2 rounded-lg font-medium cursor-pointer"
+                onClick={() => navigate("/profile/edit-profile")}
+              >
                 Edit Profile
               </button>
 
