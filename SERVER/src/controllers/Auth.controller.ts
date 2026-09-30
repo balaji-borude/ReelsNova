@@ -26,7 +26,7 @@ export const signup = async (req: Request, res: Response) => {
     if (existingUser) {
       return res.status(409).json({
         success: false,
-        error: "username already exists",
+        error: "username already taken",
       });
     } 
 

@@ -1,94 +1,134 @@
 import { Grid3x3, SquarePlay, User, MapPin, Link2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProfileMediaGrid from "./ProfileMediaGrid";
 import { posts, reels, taggedPosts } from "./mockData";
 import { useNavigate } from "react-router-dom";
+import { getProfile as getProfileApi } from "../../Services/Operations/ProfileApi";
+
+interface ProfileUser {
+  id: number;
+  username: string;
+  fullName?: string | null;
+  bio?: string | null;
+  website?: string | null;
+  location?: string | null;
+  profileImage?: string | null;
+}
+
+const DEFAULT_AVATAR =
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80";
 
 const Profile = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"posts" | "reels" | "tagged">(
     "posts",
   );
+  const [user, setUser] = useState<ProfileUser | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const profile = {
-    name: "Balaji Borude",
-    username: "balaji",
-    bio: "🚀 MERN Stack Developer | Building Nova - A Production Grade Instagram Clone.",
-    location: "Pune, India",
-    website: "www.reelsnova.com",
-    posts: 5,
-    followers: 120,
-    following: 95,
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  };
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const userString = localStorage.getItem("user");
+        const loggedInUser = userString ? JSON.parse(userString) : null;
+        const userId = Number(loggedInUser?.id);
 
-  const navigate = useNavigate();
+        if (!userId) {
+          navigate("/login");
+          return;
+        }
+
+        const data = await getProfileApi({ userId });
+        console.log("Profile data -->", data);
+        setUser(data.user);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [navigate]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-neutral-950 text-white flex items-center justify-center">
+        Loading profile...
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-neutral-950 text-white flex items-center justify-center">
+        Failed to load profile.
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-neutral-950 text-white">
       <div className="max-w-5xl mx-auto px-4 py-8">
-        {/* ================= Header ================= */}
-
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10">
-          {/* Profile Image */}
-
           <div className="flex justify-center">
             <img
-              src={profile.image}
+              src={user.profileImage || DEFAULT_AVATAR}
               alt="profile"
               className="w-36 h-36 sm:w-44 sm:h-44 lg:w-52 lg:h-52 rounded-full object-cover border-[3px] border-rose-500 p-1"
             />
           </div>
 
-          {/* Profile Info */}
-
           <div className="flex-1 text-center lg:text-left">
-            <h1 className="text-3xl font-bold">{profile.name}</h1>
+            <h1 className="text-3xl font-bold">{user.fullName}</h1>
 
-            <p className="text-neutral-400 mt-1">@{profile.username}</p>
+            <p className="text-neutral-400 mt-1">@{user.username}</p>
 
-            <p className="text-neutral-300 mt-4 leading-7 max-w-2xl">
-              {profile.bio}
-            </p>
+            {user.bio && (
+              <p className="text-neutral-300 mt-4 leading-7 max-w-2xl">
+                {user.bio}
+              </p>
+            )}
 
             <div className="flex flex-col sm:flex-row gap-4 mt-4 text-neutral-400 text-sm">
-              <div className="flex items-center justify-center lg:justify-start gap-2">
-                <MapPin size={18} />
-                {profile.location}
-              </div>
+              {user.location && (
+                <div className="flex items-center justify-center lg:justify-start gap-2">
+                  <MapPin size={18} />
+                  {user.location}
+                </div>
+              )}
 
-              <div className="flex items-center justify-center lg:justify-start gap-2">
-                <Link2 size={18} />
-                {profile.website}
-              </div>
+              {user.website && (
+                <span
+                  className="flex items-center justify-center lg:justify-start gap-2 cursor-pointer"
+                  onClick={() => window.open(user?.website || "", "_blank")}
+                >
+                  <Link2 size={18} />
+                  {user.website}
+                </span>
+              )}
             </div>
-
-            {/* Stats */}
 
             <div className="flex justify-center lg:justify-start gap-10 mt-8">
               <div className="text-center cursor-pointer">
-                <h2 className="text-2xl font-bold">{profile.posts}</h2>
-
+                <h2 className="text-2xl font-bold">{posts.length}</h2>
                 <p className="text-neutral-400 text-sm">Posts</p>
               </div>
 
               <div className="text-center cursor-pointer">
-                <h2 className="text-2xl font-bold">{profile.followers}</h2>
-
+                <h2 className="text-2xl font-bold">0</h2>
                 <p className="text-neutral-400 text-sm">Followers</p>
               </div>
 
               <div className="text-center cursor-pointer">
-                <h2 className="text-2xl font-bold">{profile.following}</h2>
-
+                <h2 className="text-2xl font-bold">0</h2>
                 <p className="text-neutral-400 text-sm">Following</p>
               </div>
             </div>
 
-            {/* Buttons */}
-
             <div className="flex flex-col sm:flex-row gap-3 mt-8">
-              <button className="bg-rose-500 hover:bg-rose-600 transition px-5 py-2 rounded-lg font-medium cursor-pointer"
+              <button
+                className="bg-rose-500 hover:bg-rose-600 transition px-5 py-2 rounded-lg font-medium cursor-pointer"
                 onClick={() => navigate("/profile/edit-profile")}
               >
                 Edit Profile
@@ -101,11 +141,8 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Divider */}
-
         <div className="border-t border-neutral-800 mt-10"></div>
 
-        {/* ================= Tabs ================= */}
         <div className="flex justify-center gap-10 mt-6">
           <button
             onClick={() => setActiveTab("posts")}

@@ -3,10 +3,7 @@ import { endpoints } from "../apis";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-const {
-  LOGIN_API,
-  SIGNUP_API
-} = endpoints;
+
 
 
 interface loginProps {
@@ -29,7 +26,7 @@ export const Login = async ({ formData }: loginProps) => {
   const toastId = toast.loading("Logging in...");
 
   try {
-    const response = await apiConnector("POST", LOGIN_API, formData);
+    const response = await apiConnector("POST", endpoints.AUTH.LOGIN, formData);
 
     if (!response.data.success) {
       throw new Error(response.data.message);
@@ -64,7 +61,7 @@ export const SignUp = async ({ formData }: SignUpProps) => {
   try {
     const response = await apiConnector(
       "POST",
-      SIGNUP_API,
+      endpoints.AUTH.SIGNUP,
       formData
     );
 

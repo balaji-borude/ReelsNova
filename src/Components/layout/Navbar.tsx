@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Logo } from "../shared/Logo";
 import toast from "react-hot-toast";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -17,17 +17,21 @@ export function Navbar() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   // PENDING --> use Redux auth slice bcz --> it is not updationg after the login we have to refresh it (uer State management);
-  
- const [user, setUser] = useState(() => {
+
+  const [user, setUser] = useState(() => {
+    const userData = localStorage.getItem("user");
+    return userData ? JSON.parse(userData) : null;
+  });
+
+  const navigate = useNavigate();
+
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return Boolean(localStorage.getItem("token"));
+  });
+
   const userData = localStorage.getItem("user");
-  return userData ? JSON.parse(userData) : null;
-});
-
-const navigate = useNavigate();
-
-const [isLoggedIn, setIsLoggedIn] = useState(() => {
-  return Boolean(localStorage.getItem("token"));
-});
+  const userdata = userData ? JSON.parse(userData) : " ";
+  const profileImage = userdata?.profileImage;
 
   /* Sync auth state once on mount */
   // useEffect(() => {
@@ -50,14 +54,14 @@ const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // logout handler 
+  // logout handler
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setIsLoggedIn(false);
     setUser(null);
     setShowProfileMenu(false);
-    toast.success("Logout succesfully")
+    toast.success("Logout succesfully");
   };
 
   return (
@@ -70,7 +74,6 @@ const [isLoggedIn, setIsLoggedIn] = useState(() => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-
           {/* Logo */}
           <Link to="/">
             <Logo size="md" />
@@ -111,10 +114,10 @@ const [isLoggedIn, setIsLoggedIn] = useState(() => {
                 <div
                   className="flex items-center gap-1 cursor-pointer"
                   // onClick={() => setShowProfileMenu((p) => !p)}
-                  onClick={() => navigate("/profile")}
+                   onClick={() => navigate("/profile")}
                 >
                   <img
-                    src="/man-chef-avatar.jpg"
+                    src={profileImage}
                     alt={`${user?.id}`}
                     className="w-10 h-10 rounded-full object-cover"
                   />
@@ -173,7 +176,9 @@ const [isLoggedIn, setIsLoggedIn] = useState(() => {
               </div>
             ) : (
               <div className="pt-4 border-t border-neutral-800 space-x-3">
-                <Link to="/dashboard" className="text-white">Dashboard</Link>
+                <Link to="/dashboard" className="text-white">
+                  Dashboard
+                </Link>
                 <button onClick={handleLogout} className="text-red-400">
                   Logout
                 </button>

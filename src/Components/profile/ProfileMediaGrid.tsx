@@ -25,9 +25,9 @@ const ProfileMediaGrid = ({
 
   return (
     <div className="grid grid-cols-3 gap-1 md:gap-2 mt-6">
-      {data.map((item) => (
+      {data.map((item,index) => (
         <div
-          key={item.id}
+          key={index}
           className="relative aspect-square overflow-hidden bg-neutral-900 cursor-pointer group"
         >
           <img

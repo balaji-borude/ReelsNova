@@ -7,7 +7,8 @@
     "build": "tsc -b",
     "start": "tsc -b && node dist/index.js",
     "dev": "concurrently \"tsc -b --watch\" \"nodemon dist/index.js\"",
-    "clean": "rmdir /s /q dist"
+    "clean": "rmdir /s /q dist",
+    "s3:ensure-bucket": "ts-node src/scripts/ensure-s3-bucket.ts"
   },
   "keywords": [],
   "author": "",
