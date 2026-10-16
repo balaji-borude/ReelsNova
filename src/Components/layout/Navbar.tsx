@@ -1,20 +1,24 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Bell, Menu, MessageCircle, X , User,Bookmark, Settings, Activity,LogOut } from "lucide-react";
 import { Logo } from "../shared/Logo";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { ConfirmationModal } from "../shared/ConfirmationModal";
 
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/feed", label: "Feed" },
   { href: "/upload", label: "Upload" },
+  { href: "/message", icon: <MessageCircle /> },
+  { href: "/notifications", icon: <Bell /> },
 ];
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   // PENDING --> use Redux auth slice bcz --> it is not updationg after the login we have to refresh it (uer State management);
 
@@ -47,12 +51,36 @@ export function Navbar() {
   //   }
   // }, []);
 
-  /* ✅ Scroll effect */
+  /* Scroll effect */
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // click outside of profile menu to close it
+  const profileMenuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target as Node)
+      ) {
+        setShowProfileMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleProfileNavigation = () => {
+    setShowProfileMenu(false);
+  };
 
   // logout handler
   const handleLogout = () => {
@@ -62,6 +90,7 @@ export function Navbar() {
     setUser(null);
     setShowProfileMenu(false);
     toast.success("Logout succesfully");
+    navigate("/login");
   };
 
   return (
@@ -88,6 +117,8 @@ export function Navbar() {
                 className="text-neutral-300 hover:text-white text-sm font-medium"
               >
                 {link.label}
+                {link.icon && <span>{link.icon}</span>}{" "}
+                {/*  if link has icon then show icon */}
               </Link>
             ))}
           </div>
@@ -110,36 +141,90 @@ export function Navbar() {
                 </Link>
               </>
             ) : (
-              <div className="relative">
+              <div ref={profileMenuRef} className="relative">
                 <div
                   className="flex items-center gap-1 cursor-pointer"
-                  // onClick={() => setShowProfileMenu((p) => !p)}
-                   onClick={() => navigate("/profile")}
+                  onClick={() => setShowProfileMenu((prev) => !prev)}
                 >
                   <img
                     src={profileImage}
                     alt={`${user?.id}`}
                     className="w-10 h-10 rounded-full object-cover"
                   />
-                  {/* <ChevronDown className="text-white" /> */}
+                  {/* down arrow */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className={`w-5 h-5  transition-transform duration-200 ${showProfileMenu ? "rotate-180" : ""}`}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                  </svg>
                 </div>
 
+                {/* Profile Menu */}
                 {showProfileMenu && (
                   <div className="absolute right-0 mt-2 w-40 bg-neutral-900 border border-neutral-800 rounded-md shadow-lg">
+                    {/* show the user's profile information like name and userName */}
+
+                      <div className="px-4 py-2 border-b border-neutral-800">
+                        <p className="text-sm text-neutral-300 font-medium">
+                          {user?.fullName || "John Doe"}
+                        </p>
+                        <p className="text-xs text-neutral-500">
+                          @{user?.username}
+                        </p>
+                    </div>
+
+
+
                     <Link
-                      to="/dashboard"
-                      className="block px-4 py-2 text-sm text-neutral-300 hover:bg-neutral-800"
+                      to="/profile"
+                      onClick={handleProfileNavigation}
+                      className=" px-4 py-2 text-sm text-neutral-300 hover:bg-neutral-800 flex gap-2"
                     >
-                      Dashboard
+                     <User size={16} strokeWidth={1.5} absoluteStrokeWidth /> <span> Profile</span>
+                     
                     </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-neutral-800"
+
+                    <Link
+                      to="/settings"
+                      onClick={handleProfileNavigation}
+                      className="flex  gap-2 px-4 py-2 text-sm text-neutral-300 hover:bg-neutral-800"
                     >
-                      Logout
+                     <Settings size={16} strokeWidth={1.5} absoluteStrokeWidth /> <span> Settings</span>
+                    </Link>
+
+                    <Link
+                      to="/activity"
+                      onClick={handleProfileNavigation}
+                      className="flex  gap-2 px-4 py-2 text-sm text-neutral-300 hover:bg-neutral-800"
+                    >
+                      <Activity size={16} strokeWidth={1.5} absoluteStrokeWidth /> <span> Activity</span>
+                    </Link>
+
+                    <Link
+                      to="/saved"
+                      onClick={handleProfileNavigation}
+                      className="flex  gap-2 px-4 py-2 text-sm text-neutral-300 hover:bg-neutral-800"
+                    >
+                     <Bookmark size={16} strokeWidth={1.5} absoluteStrokeWidth /> <span> Saved</span>
+                    </Link>
+
+                    <button
+                      onClick={
+                        setShowModal.bind(null, true) // Open the modal when logout is clicked
+                      }
+                      className="flex  gap-2 w-full text-left px-4 py-2 text-sm text-red-400 hover:cursor-pointer hover:bg-neutral-800"
+                    >
+                      <LogOut size={16} strokeWidth={1.5} absoluteStrokeWidth /> <span>Logout</span>
                     </button>
                   </div>
                 )}
+
+
               </div>
             )}
           </div>
@@ -166,6 +251,8 @@ export function Navbar() {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.label}
+                {link.icon && <span>{link.icon}</span>}{" "}
+                {/*  if link has icon then show icon */}
               </Link>
             ))}
 
@@ -179,7 +266,13 @@ export function Navbar() {
                 <Link to="/dashboard" className="text-white">
                   Dashboard
                 </Link>
-                <button onClick={handleLogout} className="text-red-400">
+                <button
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    setShowModal(true);
+                  }}
+                  className="text-red-400"
+                >
                   Logout
                 </button>
               </div>
@@ -187,6 +280,23 @@ export function Navbar() {
           </div>
         </div>
       )}
+
+      {/* Open Modal for the Logout confirmation */}
+      {showModal && (
+        <ConfirmationModal
+          title="Logout"
+          message="Are you sure you want to logout ?"
+          confirmText="Logout"
+          cancelText="Cancel"
+          onConfirm={() => {
+            setShowModal(false);
+            handleLogout();
+          }}
+          onCancel={() => setShowModal(false)}
+        />
+      )}
+
+
     </nav>
   );
 }

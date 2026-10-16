@@ -249,7 +249,7 @@ const EditProfile = () => {
                 type="text"
                 name="location"
                 value={formData.location}
-                placeholder="Enter your location "
+                placeholder="Enter your location 1"
                 onChange={handleChange}
                 className="w-full bg-neutral-950 border border-neutral-700 rounded-lg px-4 py-3 outline-none focus:border-rose-500"
               />

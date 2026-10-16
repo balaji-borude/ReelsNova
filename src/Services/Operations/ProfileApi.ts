@@ -33,7 +33,7 @@ export const getProfile = async ({ userId }: { userId: number }) => {
       `${endpoints.PROFILE.GET}/${userId}`,
       {}, // body data
       {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // acess token 
       },
     );
     // console.log("Profile fetched details -->", response);
@@ -62,6 +62,9 @@ export const editProfile = async (formData: EditProfileFormData) => {
       "PUT",
       `${endpoints.PROFILE.EDIT}/${userId}`,
       formData,
+      {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
     );
 
     if (!response.data.success) {

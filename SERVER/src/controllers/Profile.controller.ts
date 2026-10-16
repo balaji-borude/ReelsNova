@@ -6,7 +6,7 @@ import { updateProfileImage } from "../services/profile.service";
 // getProfile
 export const getProfile = async (req: Request, res: Response) => {
   try {
-    const  userId  = req.user?.id;
+    const userId = req.user?.id;
 
     if (!userId) {
       return res.status(409).json({
@@ -98,7 +98,7 @@ export const uploadProfileImage = async (
 export const editProfile = async (req: Request, res: Response) => {
   try {
     const userId = Number(req.user?.id);
-   
+
     if (!userId) {
       return res.status(400).json({
         success: false,
@@ -186,7 +186,6 @@ export const editProfile = async (req: Request, res: Response) => {
       message: "Profile updated successfully",
       user: updatedUser,
     });
-
   } catch (error) {
     console.error("Issue in Profile Edit --->", error);
     return res.status(500).json({

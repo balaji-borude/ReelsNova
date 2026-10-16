@@ -125,13 +125,11 @@ export const login = async (req: Request, res: Response) => {
     // send the response
     return res.status(200).json({
       success: true,
-      message: "Login successful",
+      message: "User Login successfully",
       token,
-      user: {
-        id: user.id,
-        email: user.email,
-      },
+      user,
     });
+
   } catch (err) {
     console.error(err);
     return res.status(500).json({

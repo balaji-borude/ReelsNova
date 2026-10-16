@@ -3,9 +3,6 @@ import { endpoints } from "../apis";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-
-
-
 interface loginProps {
   formData: {
     email: string;
@@ -15,10 +12,10 @@ interface loginProps {
 // signup
 interface SignUpProps {
   formData: {
-    username:string;
+    username: string;
     email: string;
     password: string;
-  }
+  };
 }
 
 // login
@@ -32,25 +29,22 @@ export const Login = async ({ formData }: loginProps) => {
       throw new Error(response.data.message);
     }
 
-    toast.success("Login Successful");
+    toast.success(response.data.message || "Login successful");
     // console.log("Login res",response);
-    // console.log("Checking user ",response.data.user)
+    // console.log("Checking user ",response.data)
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("user", JSON.stringify(response.data.user));
 
     return response.data;
-  } catch (error:unknown) {
+  } catch (error: unknown) {
     let errorMessage = "Login failed. Please try again.";
 
     if (axios.isAxiosError(error)) {
-  
-     errorMessage =
-        error.response?.data?.error || error.message;
+      errorMessage = error.response?.data?.error || error.message;
     }
 
     toast.error(errorMessage);
-     throw error;
-     
+    throw error;
   } finally {
     toast.dismiss(toastId);
   }
@@ -62,28 +56,23 @@ export const SignUp = async ({ formData }: SignUpProps) => {
     const response = await apiConnector(
       "POST",
       endpoints.AUTH.SIGNUP,
-      formData
+      formData,
     );
 
     toast.success("Signup Successful");
     return response.data;
-
   } catch (error: unknown) {
     console.log("SIGNUP_ERROR --> ", error);
 
     let errorMessage = "Signup failed. Please try again.";
 
     if (axios.isAxiosError(error)) {
-  
-     errorMessage =
-        error.response?.data?.error || error.message;
+      errorMessage = error.response?.data?.error || error.message;
     }
 
     toast.error(errorMessage);
-     throw error;
-
+    throw error;
   } finally {
     toast.dismiss(toastId);
   }
 };
-
